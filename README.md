@@ -1,4 +1,4 @@
-# Learning Backpropogation by Implementing it From Scratch
+# Learn Backpropogation by Implementing it From Scratch
 
 NOTE: This repository is still in progress and may not contain 100% factual information. Please revisit once completed.
 
