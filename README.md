@@ -1,6 +1,6 @@
-# Implement Backpropagation In Java
+# Learning Backpropogation by Implementing it From Scratch
 
-NOTE: This repisitory is still in progress and may not contain 100% factual information. Please revisit once completed.
+NOTE: This repository is still in progress and may not contain 100% factual information. Please revisit once completed.
 
 This repository and its README serves as a tutorial of how to implement Backpropagation in Neural Networks in Java. It also includes a tutorial of how to derive backpropagation through an example that will be accompanied by code examples to contextualize the source code.
 
