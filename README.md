@@ -135,7 +135,8 @@ result = sigmoid(net_Node(2,0)) // this the output of our feedforward algorithm
 
 Let's represent this functionality in a method in our Neural Network class.
 
-```public List<Neuron> forward_propagation() {
+```
+public List<Neuron> forward_propagation() {
     List<Neuron> input = this.inputs; // we begin with the input layer
     for (List<Neuron> layer : this.network) {
         List<Neuron> tmp = new ArrayList<>(); // Create the next layer
