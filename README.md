@@ -208,6 +208,7 @@ dCost/d(w1) = d(Cost)/d(out_Node(1,0)) * d(out_Node(1,0))/d(net_Node(1,0)) * d(n
 d(Cost)/d(out_Node(1,0)) = d(Cost)/d(out_Node(2,0)) * d(out_Node(2,0))/d(out_Node(1,0)) 
 
 d(out_Node(2,0))/d(out_Node(1,0)) = d(out_Node(2,0))/d(net_Node(2,0)) * d(net_Node(2,0))/d(out_Node(1,0))
+d(out_Node(2,0))/d(net_Node(2,0)) = sigmoid(net_node(2,0)) * (1 - sigmoid(net_node(2,0)))
 d(net_Node(2,0))/d(out_Node(1,0)) = w4
 
 d(Cost/d(out_Node(2,0)) = (expected - output_Node(2,0))
@@ -224,5 +225,39 @@ d(netNode(1,0)/d(w1) = out_Node(0,0)
 dCost/d(w1) = (expected - output_Node(2,0)) * w4 * (sigmoid(net_node(1,0)) * (1 - sigmoid(net_node(1,0)))) * out_Node(0,0)
 ```
 
-We can see that this follows a very recursive pattern. Let's define the delta for a given node(i,j) as d(Cost)/d(net_Node(i,j)). This allows us to simplify our calculations and precalculate portions of our calculations as we move from right to left through the network. 
+We can see that this follows a very recursive pattern. Notice how we must calculate d(Cost)/d(out_Node(1,0)) * d(out_Node(1,0))/d(net_Node(1,0)) for the partial Derivative for the weight 1. We must do the same calculation for weight 4 in the form: dCost/d(out_Node(2,0)) * d(out_Node(2,0))/d(netNode(2,0)). This repitition provides us a method for calculation.
+
+Let's define the delta for a given node(i,j) as d(Cost)/d(net_Node(i,j)). This allows us to simplify our calculations and precalculate portions of our calculations as we move from right to left through the network. In our backward pass we will calculate the delta per node.
+
+```
+public void backward_propagate_error(List<Double> expected) {
+    List<Neuron> prev_layer = null;
+    for(int count = this.network.size()-1; count >= 0; count--) {
+        List<Neuron> layer = this.network.get(count);
+        List<Double> errors =  new ArrayList<>();
+        if(count != this.network.size()-1) {
+            for(int j = 0; j < layer.size(); j++) {
+                double error = 0.0;
+                for (Neuron neuron : prev_layer) {
+                    List<Double> weights = neuron.getWeights();
+                    error += weights.get(j) * neuron.getDelta();
+                }
+                errors.add(error);
+            }
+        } else {
+            for(int j = 0; j < layer.size(); j++) {
+                errors.add(expected.get(j) - layer.get(j).getOut());
+            }
+        }
+        for(int j = 0; j < layer.size(); j++) {
+            Neuron neuron = layer.get(j);
+            neuron.setDelta(errors.get(j) * Neuron.transfer_derivative(neuron.getOut()));
+        }
+        count += 1;
+        prev_layer = layer;
+    }
+}
+```
+
+Note the backpropogation rule is different for the output layer versus all subsequent hidden layers. From this point we can use the delta rule to update our weights. 
 
