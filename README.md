@@ -1,7 +1,5 @@
 # Learn Backpropogation by Implementing it From Scratch
 
-NOTE: This repository is still in progress and may not contain 100% factual information. Please revisit once completed.
-
 This repository and its README serves as a tutorial of how to implement Backpropagation in Neural Networks in Java. It also includes a tutorial of how to derive backpropagation through an example that will be accompanied by code examples to aid in understanding how to implement backpropagation.
 
 This tutorial presumes a background in machine learning including an understanding of gradient descent, derivation of the delta rule given an arbitrary cost function, and the mechanics of feed-forward prediction in a artificial neural network.
